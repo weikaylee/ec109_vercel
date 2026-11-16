@@ -1,0 +1,3 @@
+import {longest,type Pair,type Survey} from './survey.ts';
+export function percentile(values:number[],p:number):number|null{if(!values.length)return null;const a=[...values].sort((x,y)=>x-y),index=(a.length-1)*p,lo=Math.floor(index),hi=Math.ceil(index);return a[lo]+(a[hi]-a[lo])*(index-lo)}
+export function waitStatistics(rows:{s:Survey,p:Pair}[]){const values=rows.map(({s,p})=>longest(p,s));return {values,students:new Set(rows.map(({s})=>s.id)).size,pairs:rows.length,mean:values.length?values.reduce((a,b)=>a+b,0)/values.length:null,median:percentile(values,.5),p05:percentile(values,.05),p95:percentile(values,.95)}}
